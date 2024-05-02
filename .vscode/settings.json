@@ -1,6 +1,6 @@
 {
     "command-runner.commands": {
-        "oj test": "oj test -c ${fileDirname}/a.out -d ${fileDirname}/tests",
+        "oj test": "oj test -c ${fileDirname}/a.out -d ${fileDirname}/tests --ignore-spaces",
         "acc submit": "cd ${fileDirname} && acc submit ${file} || cd ../../",
     }
 }
