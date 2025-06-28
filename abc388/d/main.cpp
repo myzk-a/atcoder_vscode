@@ -1,37 +1,24 @@
-#include <bits/stdc++.h>
-#include <atcoder/lazysegtree>
+#include<bits/stdc++.h>
 using namespace std;
-using namespace atcoder;
 using ll = long long;
-
-using S = long long;
-using F = long long;
-
-const S INF = 8e18;
-
-S op(S a, S b){ return std::max(a, b); }
-S e(){ return -INF; }
-S mapping(F f, S x){ return f+x; }
-F composition(F f, F g){ return f+g; }
-F id(){ return 0; }
 
 int main()
 {
     ll N;
     cin >> N;
-    vector<ll> A(N);
-    for(auto &a : A) cin >> a;
-
-    atcoder::lazy_segtree<S, op, e, F, mapping, composition, id> seg(A);
-
-    for(ll i = 0; i < N; ++i)
+    vector<ll> A(N + 1);
+    for(ll i = 1; i <= N; ++i) cin >> A[i];
+    vector<ll> C(N + 2, 0);
+    for(ll i = 1; i <= N; ++i)
     {
-        ll value = seg.get(i);
-        ll tmp = min(N - i - 1, value);
-        seg.set(i, value - tmp);
-        seg.apply(i + 1, i + tmp + 1, 1);
+        C[i] += C[i - 1];
+        A[i] += C[i];
+        ll tmp = min(N - i, A[i]);
+        A[i] -= tmp;
+        ++C[i + 1];
+        --C[i + 1 + tmp];
     }
-    for(ll i = 0; i < N; ++i) cout << seg.get(i) << " ";
+    for(ll i = 1; i <= N; ++i) cout << A[i] << " ";
     cout << endl;
     return 0;
 }
